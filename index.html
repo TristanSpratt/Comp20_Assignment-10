@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		API Fun
+	</title>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+<body>
+
+	<button onclick="getData()">
+		get Data
+	</button>
+
+	<p>
+		The API I selected contains all the characters in the show Futurama and a lot of information about them. Thehe website I found this API from can be found <a href="https://futuramaapi.herokuapp.com/" target="_blank">here</a>.
+	</p>
+
+	<p>
+		For my API request, I created a XMLHttpRequest object, opened the file with the Futurama data with a GET request, pulled the responseText into a string and parsed it, displayed the names of the characters with a for loop, and sent the API request.
+	</p>
+
+	<p>
+		This API could be useful to classify all Futurama characters based on their characteristics like their planet of origin. Moreover, it could be useful if someone wants to create a program that compares characters from different shows including Futurama.
+	</p>
+
+	<p id="progress">
+		
+	</p>
+
+	<p id="display">
+		
+	</p>
+
+
+
+	<script language="javascript">
+
+		function getData() {
+			document.getElementById("progress").innerHTML = "Status: <br/>";
+			var request = new XMLHttpRequest();
+			document.getElementById("progress").innerHTML += "API request object made <br/>";
+
+			request.open("GET", "https://futuramaapi.herokuapp.com/api/v2/characters", true);
+			document.getElementById("progress").innerHTML += "API source file opened <br/>";
+
+			request.onreadystatechange = function() {
+				if (request.readyState == 4 && request.status == 200) {
+					pulledJSON = request.responseText;
+					var toDisplay = JSON.parse(pulledJSON);
+					document.getElementById("progress").innerHTML += "Data from the API retrieved and parsed <br/>";
+
+					document.getElementById("display").innerHTML += "Character Names: " + "<br/>";
+					for (i = 0; i < toDisplay.length; i++) {
+						document.getElementById("display").innerHTML += toDisplay[i].Name + "<br/>";
+					}
+				}
+			}
+			request.send();
+			document.getElementById("progress").innerHTML += "API request sent <br/>";
+		}
+	</script>
+
+</body>
+</html>
